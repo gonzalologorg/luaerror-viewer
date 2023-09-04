@@ -73,7 +73,7 @@ app.post("/", (req, res) => {
             return;
         }
 
-        cache[body.hash] = body;
+        cache[body.hash] = process(body);
         res.status(200).send("Error logged");
     })
 })
