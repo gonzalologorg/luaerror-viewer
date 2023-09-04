@@ -1,4 +1,5 @@
 const express = require("express");
+const config = require("./config.json");
 const app = express();
 app.set("view engine", "pug");
 app.use(express.json());
@@ -79,8 +80,8 @@ app.get("/", (req, res) => {
     res.render("index.pug", {cache: cache});
 })
 
-app.listen(3000, () => {
-    console.log("Server running on port 3000")
+app.listen(config.port, () => {
+    console.log("Server running on port " + config.port)
 })
 //quiero un delete que elimine una entrada en base de datos
 app.delete("/delete/:id", (req, res) => {
