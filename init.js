@@ -49,7 +49,9 @@ event.on("initialized", () => {
 })
 
 app.post("/", (req, res) => {
-    if (!config.whitelist.indexOf(req.socket.remoteAddress)) {
+    const ipAddresses = requestIP.getClientIp(req);
+
+    if (!config.whitelist.indexOf(ipAddresses)) {
         res.status(400).send("You're not whitelisted");
         return;
     }
@@ -85,8 +87,6 @@ app.post("/", (req, res) => {
 })
 
 app.get("/", (req, res) => {
-    const ipAddresses = requestIP.getClientIp();
-    console.log(ipAddresses);
     res.render("index.pug", {cache: cache});
 })
 
