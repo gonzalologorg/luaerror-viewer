@@ -1,6 +1,8 @@
 const express = require("express");
 const config = require("./config.json");
 const app = express();
+const fs = require("fs");
+
 app.set("view engine", "pug");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
