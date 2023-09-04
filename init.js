@@ -48,6 +48,11 @@ event.on("initialized", () => {
 })
 
 app.post("/", (req, res) => {
+    if (!config.whitelist.indexOf(req.socket.remoteAddress)) {
+        res.status(400).send("You're not whitelisted");
+        return;
+    }
+
     console.log("Error received")
     var body = req.body;
 
@@ -79,11 +84,17 @@ app.post("/", (req, res) => {
 })
 
 app.get("/", (req, res) => {
+    console.log(req.socket.remoteAddress);
     res.render("index.pug", {cache: cache});
 })
 
 //quiero un delete que elimine una entrada en base de datos
 app.delete("/delete/:id", (req, res) => {
+    if (!config.whitelist.indexOf(req.socket.remoteAddress)) {
+        
+        res.status(400).send("You're not whitelisted");
+        return;
+    }
     let hash = req.params.id;
     if (!hash) {
         res.send("Missing parameters").status(400);
