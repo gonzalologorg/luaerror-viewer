@@ -50,21 +50,20 @@ event.on("initialized", () => {
 
 app.post("/", (req, res) => {
     const ipAddresses = requestIP.getClientIp(req);
-
-    if (!config.whitelist.indexOf(ipAddresses)) {
+    if (config.whitelist.indexOf(ipAddresses) == -1) {
         res.status(400).send("You're not whitelisted");
         return;
     }
 
-    console.log("Error received")
     var body = req.body;
-
-    if (!body.hash || !body.error || !body.stack || !body.realm) {
+    if (!body.hash || !body.error || (body.stack != "" && !body.stack) || !body.realm) {
+        console.log("Received missing parameter from " + ipAddresses)
         res.status(400).send("Missing parameters");
         return;
     }
 
     if (cache[body.hash]) {
+        console.log("Error it's already logged from " + ipAddresses)
         res.status(200).send("Error already logged");
         return;
     }
@@ -82,7 +81,8 @@ app.post("/", (req, res) => {
         }
 
         cache[body.hash] = process(body);
-        res.status(200).send("Error logged");
+        console.log("Error logged:\n" + body.error);
+        res.status(200).send("Error logged:\n" + body.error);
     })
 })
 
