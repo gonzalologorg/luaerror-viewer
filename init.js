@@ -80,9 +80,6 @@ app.get("/", (req, res) => {
     res.render("index.pug", {cache: cache});
 })
 
-app.listen(config.port, () => {
-    console.log("Server running on port " + config.port)
-})
 //quiero un delete que elimine una entrada en base de datos
 app.delete("/delete/:id", (req, res) => {
     let hash = req.params.id;
@@ -110,3 +107,17 @@ app.delete("/delete/:id", (req, res) => {
         res.status(200).send("Error deleted");
     })
 })
+
+var server;
+if (!config.useSSL) {
+    var http = require('http');
+    server = http.createServer(app);
+} else {
+    var https = require('https');
+    server = https.createServer({
+        key: fs.readFileSync(config.privateKeyPath, 'utf8'),
+        cert: fs.readFileSync(config.certificatePath, 'utf8')
+    }, app);
+}
+
+server.listen(config.port);
