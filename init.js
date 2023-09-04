@@ -51,6 +51,7 @@ event.on("initialized", () => {
 app.post("/", (req, res) => {
     const ipAddresses = requestIP.getClientIp(req);
     if (config.whitelist.indexOf(ipAddresses) == -1) {
+        console.log("Received request from " + ipAddresses)
         res.status(400).send("You're not whitelisted");
         return;
     }
