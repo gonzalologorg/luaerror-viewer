@@ -2,6 +2,7 @@ const express = require("express");
 const config = require("./config.json");
 const app = express();
 const fs = require("fs");
+const requestIP = require('request-ip');
 
 app.set("view engine", "pug");
 app.use(express.json());
@@ -84,7 +85,8 @@ app.post("/", (req, res) => {
 })
 
 app.get("/", (req, res) => {
-    console.log(req.socket.remoteAddress);
+    const ipAddresses = requestIP.getClientIp();
+    console.log(ipAddresses);
     res.render("index.pug", {cache: cache});
 })
 
