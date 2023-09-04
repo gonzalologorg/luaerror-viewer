@@ -93,11 +93,6 @@ app.get("/", (req, res) => {
 
 //quiero un delete que elimine una entrada en base de datos
 app.delete("/delete/:id", (req, res) => {
-    if (!config.whitelist.indexOf(req.socket.remoteAddress)) {
-        
-        res.status(400).send("You're not whitelisted");
-        return;
-    }
     let hash = req.params.id;
     if (!hash) {
         res.send("Missing parameters").status(400);
@@ -109,8 +104,6 @@ app.delete("/delete/:id", (req, res) => {
         res.send("Error not logged").status(200);
         return;
     }
-
-    console.log(hash);
 
     conn.query("DELETE FROM errors WHERE hash = ?", [hash], (err, rows, fields) => {
         if (err) {
