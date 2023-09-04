@@ -1,0 +1,36 @@
+doctype html
+html
+    head
+        style
+            include style.css
+        script.
+            function deleteError(id){
+                var xhr = new XMLHttpRequest();
+                xhr.open('DELETE', '/delete/' + id, true);
+                xhr.send();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState != 4) return;
+                    if (xhr.status != 200) {
+                        alert(xhr.status + ': ' + xhr.statusText);
+                    } else {
+                        location.reload();
+                    }
+                }
+            }
+
+            function toggleView(e, item) {
+                e.classList.toggle("isopen");
+                e.children[0].classList.toggle("transparent");
+                console.log(item)
+            }
+    body
+        header
+            h2= "Errors!!!"
+        main
+            div(class="container")
+                each item in cache
+                    div(class="entry")
+                        div(class="realm" + item.realm.replaceAll("'", ""))= ""
+                        .title(onclick=`toggleView(this)`)= item.name
+                            .sub.transparent= item.stack + "OKKK\nkgakjskdgjawegjaw"
+                        button(class="delete" type='button' onclick='deleteError(' + item.hash + ')')= "✖"

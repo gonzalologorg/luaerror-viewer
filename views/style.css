@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;800&display=swap');
+
+:root {
+    --bg-color: #662400;
+    --bg-accent: #B33F00;
+    --bg-secondary: #FF6B1A;
+    --bg-secondary-accent: #00B3AD;
+    --clr-server: #00B3AD;
+    --clr-client: #F27405FF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-color: var(--bg-color);
+}
+
+header {
+    width: 100%;
+    display: flex;
+    background-color: var(--bg-accent);
+    height: 3em;
+}
+
+h2 {
+    color: white;
+    font-size: 2em;
+    height: 100%;
+    font-family: 'Source Code Pro', monospace;
+    margin-left: .5em;
+    margin-top: .1em;
+}
+
+main {
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 2em;
+}
+
+.container {
+    background-color: var(--bg-accent);
+    display: flex;
+    width: calc(100% - 4em);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 16px;
+    padding: 0 8px 8px 8px;
+}
+
+.entry {
+    font-family: 'Source Code Pro', monospace;
+    min-height: 3em;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--bg-color);
+    width: 100%;
+    margin-top: 8px;
+    border-radius: 8px;
+    align-items: center;
+    font-size: .75em;
+}
+
+.isopen {
+    height: 10em!important;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.title {
+    color: rgba(255, 255, 255, 0.8);
+    margin-left: 8px;
+    overflow-x: hidden;
+    position: relative;
+    height: 3em;
+    top: 0.5em;
+    overflow: hidden;
+    width: calc(100% - 2em - 32px);
+}
+
+.transparent {
+    color: rgba(255, 255, 255, 0)!important;
+}
+
+.sub {
+    color: #FF6B1A;
+    display: relative;
+    overflow-y: hidden;
+    margin-top: 8px;
+    top: 3em;
+}
+
+.realmclient {
+    background-color: #F27405;
+    width: 2em;
+    height: 2em;
+    border: none;
+    border-radius: 8px;
+    margin-left: 8px;
+}
+
+.realmserver {
+    background-color: #03A678;
+    width: 2em;
+    height: 2em;
+    border: none;
+    border-radius: 8px;
+    margin-left: 8px;
+}
+
+.delete {
+    background-color: var(--bg-accent);
+    width: 2.75em;
+    height: 2.75em;
+    border: none;
+    border-radius: 8px;
+    position: absolute;
+    right: calc(2em + 12px);
+    align-self: center;
+    color: white;
+}
