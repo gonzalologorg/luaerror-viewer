@@ -69,7 +69,8 @@ main {
 }
 
 .isopen {
-    height: 10em!important;
+    height: max-content!important;
+    margin-bottom: 12px;
     color: rgba(255, 255, 255, 0.7);
 }
 
@@ -116,12 +117,14 @@ main {
 
 .delete {
     background-color: var(--bg-accent);
-    width: 2.75em;
-    height: 2.75em;
+    width: 2.5em;
+    height: calc(2.5em - 4px);
+    cursor: pointer;
+    top: 4px;
     border: none;
     border-radius: 8px;
-    position: absolute;
-    right: calc(2em + 12px);
-    align-self: center;
+    position: relative;
+    right: 4px;
+    align-self: start;
     color: white;
 }
