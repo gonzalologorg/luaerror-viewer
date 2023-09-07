@@ -1,0 +1,10 @@
+{
+    "host":"",
+    "user":"",
+    "password":"",
+    "database":"",
+    "port":"4500",
+    "useSSL":false,
+    "privateKeyPath":"",
+    "certificatePath":""
+}
