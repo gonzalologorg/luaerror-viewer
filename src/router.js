@@ -24,16 +24,21 @@ app.post("/", (req, res) => {
         return;
     }
 
+    if (parseInt(body.hash) || (body.realm != "client" && body.realm != "server")) {
+        console.log("Hash/realm input it's invalid");
+        res.status(400).send("Error already logged");
+    }
+
     if (cache[body.hash]) {
         console.log("Error it's already logged from " + ipAddresses)
         res.status(200).send("Error already logged");
         return;
     }
 
-    body.hash = conn.escape(body.hash);
+    body.hash = parseInt(body.hash);
     body.error = conn.escape(body.error);
     body.stack = conn.escape(body.stack);
-    body.realm = conn.escape(body.realm);
+    body.realm = body.realm;
 
     conn.query("INSERT INTO errors (hash, error, stack, realm) VALUES (?, ?, ?, ?)", [body.hash, body.error, body.stack, body.realm], (err, rows, fields) => {
         if (err) {
