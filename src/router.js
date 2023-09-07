@@ -1,12 +1,15 @@
 console.log("Initializing Express Module")
 const config = require("./../config.json");
 const express = require("express");
+const favicon = require('serve-favicon')
 const app = express();
 const fs = require("fs");
+const path = require('path')
 
 app.set("view engine", "pug");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(favicon(path.join(__dirname, './../public', 'favicon.ico')));
 
 const {conn, event, process} = require("./database.js");
 
