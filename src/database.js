@@ -10,17 +10,39 @@ const connection = mysql.createPool({
     connectionLimit : 10,
 });
 
-connection.connect((err) => {
-    if (err) {
-        console.log("Error connecting to database");
-        return;
-    }
+function process(entry) {
+    entry.name = entry.error.slice(0, 192);
+    entry.stack = entry.stack.replace(/'/gm, "");
+    return entry;
+}
 
-    console.log("Connected to database, downloading cache");
-    dbEmitter.emit("initialized");
-});
+connection.query(`CREATE TABLE IF NOT EXISTS errors (
+    id INT NOT NULL AUTO_INCREMENT,
+    hash VARCHAR(255) NOT NULL,
+    error TEXT NOT NULL,
+    stack TEXT NOT NULL,
+    realm VARCHAR(8) NOT NULL,
+    PRIMARY KEY (id));`, function(err){
+        console.log("Connected to database, downloading cache");
+        let cache = {};
+        connection.query("SELECT * FROM errors", (err, rows, fields) => {
+            if (err) {
+                console.log("Error downloading cache\n" + err);
+                return;
+            }
+    
+            for (var i = 0; i < rows.length; i++) {
+                cache[rows[i].hash] = process(rows[i]);
+            }
+    
+            dbEmitter.emit("initialized", cache);
+        });
+
+    }
+);
 
 module.exports = {
     conn : connection,
-    event : dbEmitter
+    event : dbEmitter,
+    process : process
 };

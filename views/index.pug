@@ -24,19 +24,29 @@ html
                 }
             }
 
-            function toggleView(e, item) {
+            function toggleView(e, stack) {
+                e.isToggled = !(e.isToggled || false);
                 e.classList.toggle("isopen");
                 e.children[0].classList.toggle("transparent");
-                console.log(item)
+
+                console.log(stack)
+                var clientHeight = e.children[0].clientHeight;
+                e.parentElement.style.height = e.isToggled ? "calc(" + clientHeight + "px + 3em + 16px)" : "calc(3em + 4px)";
             }
     body
         header
-            h2= "Errors!!!"
+            .headertitle
+                h2= "Error Logger"
+                small= " By Gonzo"
         main
             div(class="container")
-                each item in cache
-                    div(class="entry")
-                        div(class="realm" + item.realm.replaceAll("'", ""))= ""
-                        .title(onclick=`toggleView(this)`)= item.name
-                            .sub.transparent= item.stack
-                        button(class="delete" type='button' onclick='deleteError(' + item.hash + ')')= "✖"
+                if Object.keys(cache).length > 0
+                    each item in cache
+                        div(class="entry")
+                            div(class="realmbase realm" + item.realm.replaceAll("'", ""))= ""
+                            .title(onclick=`toggleView(this, "${item.stack}")`)= item.name
+                                .sub.transparent=`${item.stack}`
+                            button(class="delete" type='button' onclick='deleteError(' + item.hash + ')')= "✖"
+                else
+                    div(class="empty")
+                        h3="Nothing has been logged yet!"
