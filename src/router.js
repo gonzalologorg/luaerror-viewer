@@ -9,7 +9,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const {conn, event, process} = require("./database.js");
-const pug = require("pug");
 
 var cache = {};
 event.on("initialized", (data) => {
