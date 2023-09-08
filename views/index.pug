@@ -3,11 +3,11 @@ html
     title=`(${Object.keys(cache).length}) Errors`
     head
         meta(charset='utf-8')
-        meta(http-equiv='X-UA-Compatible', content='IE=edge')
-        meta(name='description', content='Some description')
-        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(http-equiv='X-UA-Compatible' content='IE=edge')
+        meta(name='description' content='Some description')
+        meta(name='viewport' content='width=device-width, initial-scale=1')
         meta(name='title' content=`(${Object.keys(cache).length}) Errors`)
-        link(rel='icon', sizes='16x16 32x32 48x48 64x64', href='favicon.ico')
+        link(rel='icon' sizes='16x16 32x32 48x48 64x64' href='favicon.ico')
         style
             include style.css
         script.
@@ -44,10 +44,11 @@ html
                 if Object.keys(cache).length > 0
                     each item in cache
                         div(class="entry")
-                            div(class="realmbase realm" + item.realm.replaceAll("'", ""))= ""
+                            div(class="realmbase realm" + item.realm.replaceAll("'", ""))= "" 
                             .title(onclick=`toggleView(this, "${item.stack}")`)= item.name
-                                .sub.transparent=`${item.stack}`
-                            button(class="delete" type='button' onclick='deleteError(' + item.hash + ')')= "✖"
+                                .sub.transparent!= item.stack
+
+                            button(class="delete" type='button' onclick='deleteError(' + item.hash + ')')= "✖" 
                 else
                     div(class="empty")
                         h3="Nothing has been logged yet!"
