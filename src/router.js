@@ -68,7 +68,6 @@ app.delete("/delete/:id", (req, res) => {
         return;
     }
     
-    hash = conn.escape(hash);
     if (!cache[hash]) {
         res.send("Error not logged").status(200);
         return;
