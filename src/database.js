@@ -11,13 +11,8 @@ const connection = mysql.createPool({
 });
 
 function process(entry) {
-    entry.name = entry.error.trim().slice(0, 192);
-    entry.stack = entry.stack
-        .trim()
-        .replace(/\s/g, "")
-        .replace(/'/g, "")
-        .replace(/\\n/g, "<br />");
-
+    entry.name = entry.error.slice(0, 192);
+    entry.stack = entry.stack.replace(/'/g, "").replace(/\\n/g, "<br />");
     return entry;
 }
 
