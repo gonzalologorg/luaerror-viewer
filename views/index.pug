@@ -35,11 +35,16 @@ html
                 e.parentElement.style.height = e.isToggled ? "calc(" + clientHeight + "px + 3em + 16px)" : "calc(3em + 4px)";
             }
 
-            function copyStack(e, stack) {
+            function copyStack(e, el, stack) {
                 let match = stack.match(/(\w+\/+\w+.lua):(\d+)/);
                 if (!match) {
                     return;
                 }
+
+                el.classList.add("copy-glow");
+                setTimeout(() => {
+                    el.classList.remove("copy-glow");
+                }, 500)
                 navigator.clipboard.writeText(match[0]);
                 e.preventDefault();
             }
@@ -87,7 +92,7 @@ html
                     each item in cache
                         div(class="entry")
                             div(class="realmbase realm" + item.realm.replaceAll("'", "") onclick=`toggleView(this, "${item.stack}")`)= "" 
-                            .title(onclick=`copyStack(event, "${item.name}")`)= item.name
+                            .title(onclick=`copyStack(event, this, "${item.name}")`)= item.name
                                 .sub.transparent!= item.stack
 
                             button(class="delete" type='button' onclick='deleteError(' + item.hash + ')')= "✖" 

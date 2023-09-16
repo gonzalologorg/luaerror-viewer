@@ -157,6 +157,24 @@ h3 {
     overflow: hidden;
 }
 
+.copy-glow {
+    color:white;
+    animation: .25s ease-in 0s flash;
+}
+
+@keyframes flash {
+    from {
+        /* pushes the sun down past the viewport */
+        color:white;
+        transform: scale(1.025);
+    }
+    to {
+        /* returns the sun to its default position */
+        color: var(--txt-white);
+        transform: scale(1);
+    }
+}
+
 .transparent {
     color: rgba(255, 255, 255, 0)!important;
 }
