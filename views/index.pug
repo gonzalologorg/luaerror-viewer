@@ -27,16 +27,58 @@ html
 
             function toggleView(e, stack) {
                 e.isToggled = !(e.isToggled || false);
-                e.classList.toggle("isopen");
-                e.children[0].classList.toggle("transparent");
+                let stackElement = e.parentElement.children[1]
+                stackElement.classList.toggle("isopen");
+                stackElement.children[0].classList.toggle("transparent");
 
-                console.log(stack)
-                var clientHeight = e.children[0].clientHeight;
+                var clientHeight = stackElement.children[0].clientHeight;
                 e.parentElement.style.height = e.isToggled ? "calc(" + clientHeight + "px + 3em + 16px)" : "calc(3em + 4px)";
+            }
+
+            function copyStack(e, stack) {
+                let match = stack.match(/(\w+\/+\w+.lua):(\d+)/);
+                if (!match) {
+                    return;
+                }
+                navigator.clipboard.writeText(match[0]);
+                e.preventDefault();
+            }
+
+            let curState = "all";
+            function setFilter(e, state) {
+                document.getElementById("filter-client").classList.remove("filter-selected")
+                document.getElementById("filter-server").classList.remove("filter-selected")
+                if (curState == state) {
+                    curState = "all";
+                    e.isSelected = false;
+                } else {
+                    e.classList.toggle("filter-selected");
+                    curState = state;
+                    e.isSelected = true;
+                }
+                let entries = document.getElementsByClassName("entry");
+                for (let i = 0; i < entries.length; i++) {
+                    let entry = entries[i];
+                    if (!entry.oldDisplay && entry.style.display != "none") {
+                        entry.oldDisplay = entry.style.display;
+                    }
+                    let realm = entry.children[0].classList[1];
+                    if (curState == "cl") {
+                        entry.style.display = realm == "realmclient" ? entry.oldDisplay : "none";
+                        console.log(realm)
+                    } else if (curState == "sv") {
+                        entry.style.display = realm == "realmserver" ? entry.oldDisplay : "none";
+                    } else {
+                        entry.style.display = entry.oldDisplay;
+                    }
+                }
             }
     body
         header
             .headertitle
+                div(class="filter")
+                    button(id="filter-client" class="filter-btn filter-cl" onclick=`setFilter(this, "cl")`)= "CL"
+                    button(id="filter-server" class="filter-btn filter-sv" onclick=`setFilter(this, "sv")`)= "SV"
                 h2= "Error Logger"
                 small= "By Gonzo"
         main
@@ -44,8 +86,8 @@ html
                 if Object.keys(cache).length > 0
                     each item in cache
                         div(class="entry")
-                            div(class="realmbase realm" + item.realm.replaceAll("'", ""))= "" 
-                            .title(onclick=`toggleView(this, "${item.stack}")`)= item.name
+                            div(class="realmbase realm" + item.realm.replaceAll("'", "") onclick=`toggleView(this, "${item.stack}")`)= "" 
+                            .title(onclick=`copyStack(event, "${item.name}")`)= item.name
                                 .sub.transparent!= item.stack
 
                             button(class="delete" type='button' onclick='deleteError(' + item.hash + ')')= "✖" 

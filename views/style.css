@@ -36,6 +36,41 @@ header {
     height: 3em;
 }
 
+.filter {
+    align-items: start;
+    position: absolute;
+    left: 4px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1em;
+    height: 2.5em;
+    width: 8em;
+}
+
+.filter-btn {
+    background-color : var(--clr-client);
+    width: 4em;
+    height: 100%;
+    margin-right: 8px;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transform: scale(.9);
+}
+
+.filter-cl {
+    background-color : var(--clr-client);
+    border: var(--clr-client);
+}
+
+.filter-sv {
+    background-color : var(--clr-server);
+    border: var(--clr-server);
+}
+
+.filter-selected {
+    transform: scale(1);
+}
+
 .headertitle {
     height: 100%;
     width: 100%;
@@ -140,6 +175,7 @@ h3 {
     height: 100%;
     align-self: center;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 .realmclient {
