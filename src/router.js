@@ -22,7 +22,7 @@ event.on("initialized", (data) => {
 app.post("/", (req, res) => {
     var body = req.body;
     if (!body.hash || !body.error || (body.stack != "" && !body.stack) || !body.realm) {
-        console.log("Received missing parameter from " + ipAddresses)
+        console.log("Received missing parameter from " + req.hostname)
         res.status(400).send("Missing parameters");
         return;
     }
